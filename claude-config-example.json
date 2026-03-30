@@ -1,0 +1,12 @@
+{
+  "mcpServers": {
+    "contextflow": {
+      "command": "node",
+      "args": ["D:/FREENLANCER/luis/contextflow_mcp/dist/index.js"],
+      "env": {
+        "CONTEXTFLOW_TOKEN": "PEGA_AQUI_EL_PUBLIC_TOKEN_DEL_SNAPSHOT",
+        "CONTEXTFLOW_API_URL": "http://localhost:3001"
+      }
+    }
+  }
+}
