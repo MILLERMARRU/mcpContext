@@ -105,7 +105,7 @@ server.tool(
 // ── Tool: ask_context ────────────────────────────────────────────────────────
 server.tool(
   'ask_context',
-  'Ask a natural language question about the codebase and get an AI-generated answer grounded in the actual code. Use this when you need to UNDERSTAND how something works, not just find it.',
+  'Ask a natural language question about the codebase and get relevant code fragments as context. Use this when you need to UNDERSTAND how something works, not just find it.',
   {
     question: z
       .string()
@@ -117,30 +117,33 @@ server.tool(
       .max(12)
       .optional()
       .default(8)
-      .describe('Number of code chunks to use as context for the answer (default 8)'),
+      .describe('Number of code chunks to retrieve as context (default 8)'),
   },
   async ({ question, top_k }) => {
-    const { data } = await api.post(`/context/${TOKEN}/chat`, {
-      question,
+    const { data } = await api.post(`/context/${TOKEN}/query`, {
+      query: question,
       topK: top_k,
+      threshold: 0.3,
     });
 
-    const sources = (data.sources as ChunkResult[])
-      .map((c, i) => `  ${i + 1}. \`${c.filePath}\` L${c.startLine}–${c.endLine} (${Math.round(c.similarity * 100)}% match)`)
-      .join('\n');
+    if (!data.results || data.results.length === 0) {
+      return {
+        content: [{ type: 'text', text: 'No relevant code fragments found for this question.' }],
+      };
+    }
+
+    const chunks = (data.results as ChunkResult[])
+      .map(
+        (c, i) =>
+          `### [${i + 1}] ${c.filePath} (L${c.startLine}–${c.endLine}) · ${Math.round(c.similarity * 100)}% match${c.language ? ` · ${c.language}` : ''}\n\`\`\`${c.language ?? ''}\n${c.content}\n\`\`\``,
+      )
+      .join('\n\n');
 
     return {
       content: [
         {
           type: 'text',
-          text: [
-            data.answer,
-            '',
-            sources ? `**Sources used:**\n${sources}` : '',
-            `\n_Generated in ${data.processingTimeMs}ms_`,
-          ]
-            .filter((l) => l !== undefined)
-            .join('\n'),
+          text: `Found ${data.results.length} relevant fragments for "${question}" (${data.processingTimeMs}ms):\n\n${chunks}`,
         },
       ],
     };
