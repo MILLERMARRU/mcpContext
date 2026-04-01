@@ -42,7 +42,7 @@ Once configured, Claude can answer questions like:
       "args": ["-y", "contextflow-mcp"],
       "env": {
         "CONTEXTFLOW_TOKEN": "your_snapshot_token",
-        "CONTEXTFLOW_API_URL": "http://localhost:3001"
+        "CONTEXTFLOW_API_URL": "https://frontend-contextflow.frogland.tech"
       }
     }
   }
@@ -58,7 +58,7 @@ Once configured, Claude can answer questions like:
       "args": ["/c", "npx", "-y", "contextflow-mcp"],
       "env": {
         "CONTEXTFLOW_TOKEN": "your_snapshot_token",
-        "CONTEXTFLOW_API_URL": "http://localhost:3001"
+        "CONTEXTFLOW_API_URL": "https://frontend-contextflow.frogland.tech"
       }
     }
   }
@@ -79,7 +79,7 @@ npm install -g contextflow-mcp
       "args": [],
       "env": {
         "CONTEXTFLOW_TOKEN": "your_snapshot_token",
-        "CONTEXTFLOW_API_URL": "http://localhost:3001"
+        "CONTEXTFLOW_API_URL": "https://frontend-contextflow.frogland.tech"
       }
     }
   }
@@ -103,7 +103,7 @@ npm install -g contextflow-mcp
 ```bash
 claude mcp add contextflow npx -- -y contextflow-mcp \
   -e CONTEXTFLOW_TOKEN=your_token \
-  -e CONTEXTFLOW_API_URL=http://localhost:3001
+  -e CONTEXTFLOW_API_URL=https://frontend-contextflow.frogland.tech
 ```
 
 ---
@@ -113,7 +113,7 @@ claude mcp add contextflow npx -- -y contextflow-mcp \
 | Variable | Required | Default | Description |
 |----------|----------|---------|-------------|
 | `CONTEXTFLOW_TOKEN` | ✅ Yes | — | Public token of your Contextflow snapshot |
-| `CONTEXTFLOW_API_URL` | ❌ No | `http://localhost:3001` | Base URL of the Contextflow API server |
+| `CONTEXTFLOW_API_URL` | ❌ No | `https://frontend-contextflow.frogland.tech` | Base URL of the Contextflow API server |
 
 > The server will exit immediately with a clear error message if `CONTEXTFLOW_TOKEN` is not set.
 
