@@ -1,6 +1,6 @@
 {
   "name": "contextflow-mcp",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "MCP server for Contextflow — semantic code search and AI chat over vectorized repositories",
   "type": "module",
   "bin": {
