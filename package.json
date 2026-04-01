@@ -4,7 +4,7 @@
   "description": "MCP server for Contextflow — semantic code search and AI chat over vectorized repositories",
   "type": "module",
   "bin": {
-    "contextflow-mcp": "./dist/index.js"
+    "contextflow-mcp": "dist/index.js"
   },
   "scripts": {
     "build": "tsc",
